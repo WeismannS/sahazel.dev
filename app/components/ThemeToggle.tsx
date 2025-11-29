@@ -9,7 +9,7 @@ export function ThemeToggle() {
     return (
         <button
             onClick={toggleTheme}
-            className="absolute top-6 right-6 p-2 text-muted hover:text-foreground transition-colors"
+            className="fixed top-6 right-6 p-2 text-muted hover:text-foreground transition-colors z-50"
             aria-label="Toggle theme"
         >
             {theme === "dark" ? (

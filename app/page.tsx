@@ -1,118 +1,21 @@
 import { Github, Twitter, AtSign } from "lucide-react";
-import { ThemeToggle } from "./components/ThemeToggle";
 import { ProjectCard, TechRegistery } from "./components/ProjectCard";
-import { RoughNotation } from "react-rough-notation";
 import { HoverHighlight } from "./components/HoverHighlight";
-import Image from "next/image"
+import Image from "next/image";
+import Link from "next/link";
 import img from "../public/pfp.jpg";
 import profilePicture from "../public/pfp-main.png";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
-type Tech = keyof typeof TechRegistery;
-
-const projects: {
-  title: string;
-  description: string;
-  technologies: Tech[];
-  status: "operational" | "maintenance" | "offline";
-  detailsUrl: string;
-}[] = [
-    {
-      title: "NotesBuddy",
-      description: "A comprehensive study platform with notes, flashcards, quizzes, AI chatbot, and interactive learning tools",
-      technologies: ["Next.js", "React", "TypeScript", "Drizzle ORM"],
-      status: "operational",
-      detailsUrl: "/projects/notesbuddy",
-    },
-    {
-      title: "NotesBuddy",
-      description: "A comprehensive study platform with notes, flashcards, quizzes, AI chatbot, and interactive learning tools",
-      technologies: ["Next.js", "React", "TypeScript", "Drizzle ORM"],
-      status: "operational",
-      detailsUrl: "/projects/notesbuddy",
-    },
-    {
-      title: "NotesBuddy",
-      description: "A comprehensive study platform with notes, flashcards, quizzes, AI chatbot, and interactive learning tools",
-      technologies: ["Next.js", "React", "TypeScript", "Drizzle ORM"],
-      status: "operational",
-      detailsUrl: "/projects/notesbuddy",
-    },
-    {
-      title: "NotesBuddy",
-      description: "A comprehensive study platform with notes, flashcards, quizzes, AI chatbot, and interactive learning tools",
-      technologies: ["Next.js", "React", "TypeScript", "Drizzle ORM"],
-      status: "operational",
-      detailsUrl: "/projects/notesbuddy",
-    },
-    {
-      title: "NotesBuddy",
-      description: "A comprehensive study platform with notes, flashcards, quizzes, AI chatbot, and interactive learning tools",
-      technologies: ["Next.js", "React", "TypeScript", "Drizzle ORM"],
-      status: "operational",
-      detailsUrl: "/projects/notesbuddy",
-    },
-  ];
-
-const articles = [
-  {
-    title: "Building a scalable scraper",
-    date: "Posted almost 4 years ago",
-  },
-   {
-    title: "Building a scalable scraper",
-    date: "Posted almost 4 years ago",
-  },
-  {
-    title: "Golang is not a good language",
-    date: "Posted about 4 years ago",
-  },
-  {
-    title: "Building a robust permissions system in TypeScript",
-    date: "Posted about 4 years ago",
-  }
-  ,
-  {
-    title: "Building a robust permissions system in TypeScript",
-    date: "Posted about 4 years ago",
-  }
-  ,
-  {
-    title: "Building a robust permissions system in TypeScript",
-    date: "Posted about 4 years ago",
-  }
-  ,
-  {
-    title: "Building a robust permissions system in TypeScript",
-    date: "Posted about 4 years ago",
-  }
-  ,
-  {
-    title: "Building a robust permissions system in TypeScript",
-    date: "Posted about 4 years ago",
-  }
-  ,
-  {
-    title: "Building a robust permissions system in TypeScript",
-    date: "Posted about 4 years ago",
-  }
-  ,
-  {
-    title: "Building a robust permissions system in TypeScript",
-    date: "Posted about 4 years ago",
-  }
-  ,
-  {
-    title: "Building a robust permissions system in TypeScript",
-    date: "Posted about 4 years ago",
-  }
-];
+import { projects } from "@/lib/projects";
+import { getAllPosts } from "@/lib/actions";
 
 export default function Home() {
+  const articles  = getAllPosts();
   return (
     <div className="min-h-screen w-full relative">
       {/* Theme toggle */}
-      <ThemeToggle />
+
 
       <main className="max-w-6xl mx-auto px-6 py-24">
         {/* Hero Section */}
@@ -167,7 +70,7 @@ export default function Home() {
             </div>
 
             {/* Image placeholder */}
-            <Image 
+            <Image
               src={profilePicture}
               alt="Profile Picture"
               width={250}
@@ -183,8 +86,8 @@ export default function Home() {
             <div>
               <p className="text-secondary-foreground/50 text-xs font-bold">Featured</p>
               <h2 className="text-lg font-semibold mb-6">
-              {projects.length} Projects 📁
-            </h2></div>
+                {projects.length} Projects 📁
+              </h2></div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {projects.slice(0, 4).map((project, index) => (
@@ -194,31 +97,31 @@ export default function Home() {
                   description={project.description}
                   technologies={project.technologies}
                   status={project.status}
-                  detailsUrl={project.detailsUrl}
+                  githubUrl={project.githubUrl}
                 />
               ))}
             </div>
-            { projects.length > 4 && <a href="/projects" className="m-auto w-32">
+            {projects.length > 4 && <Link href="/projects" className="m-auto w-32">
               <button className="border border-border rounded-sm px-4 py-2  m-auto w-32 font-siz text-xs font-bold mt-5 hover:bg-input/50 hover:shadow-accent-foreground transition-all">
                 Show More
               </button>
-            </a>}
+            </Link>}
           </section>
           <section className="w-full lg:w-[30%] flex flex-col">
             <div>
               <p className="text-secondary-foreground/50 text-xs font-bold">Latest</p>
               <h2 className="text-lg font-semibold mb-6">
-              {articles.length} Articles 📝
-            </h2></div>
+                {articles.length} Articles 📝
+              </h2></div>
             <div className="flex flex-col gap-7">
-              {articles.slice(0,8).map((article, index) => (
+              {articles.slice(0, 8).map((article, index) => (
                 <div key={article.title + index} className="flex flex-col">
                   <HoverHighlight type="highlight"> <a
-                    href="#"
-                    className="text-foreground font-medium hover:underline"
+                    href={article.url}
+                    className="text-foreground font-medium"
                   >
                     {article.title}
-                  </a>  
+                  </a>
                   </HoverHighlight>
                   <span className="text-sm text-muted mt-1">
                     {article.date}
@@ -226,19 +129,19 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            { articles.length > 10 && <a href="/articles" className="ml-auto mr-auto w-32">
+            {articles.length > 8 && <Link href="/blog" className="ml-auto mr-auto w-32">
               <button className="border border-border rounded-sm px-4 py-2  m-auto w-32 font-siz text-xs font-bold mt-5 hover:bg-input/50 hover:shadow-accent-foreground transition-all">
                 Show More
               </button>
-            </a>}
+            </Link>}
           </section>
         </section>
         <div className="border w-[90%] h-0.5 m-auto"></div>
-         <div className="mt-20"><p className="text-secondary-foreground/50 text-xs font-bold">About Me</p>
-         <h2 className="text-lg font-semibold mb-6">Weismann 👨‍💻</h2>
-         </div>
+        <div className="mt-20"><p className="text-secondary-foreground/50 text-xs font-bold">About Me</p>
+          <h2 className="text-lg font-semibold mb-6">Weismann 👨‍💻</h2>
+        </div>
         <section className="flex flex-col lg:flex-row gap-12 lg:gap-20">
-          
+
           <div>
             <Image
               src={img}
@@ -249,30 +152,26 @@ export default function Home() {
             />
           </div>
           <div className="space-y-4 text-muted leading-relaxed">
-              <p>
-                I'm Software engineer with a wide range of experience in different domains. From low-level system programming to high-level web development. 
-                Have gained a solid understanding of various programming paradigms and technologies ranging from Python, TypeScript, C++, C to Lua
-              </p>
-              <p>
-                My experience spans web development, system programming, and automation scripts. Recently, I've been diving into infrastructure, exploring new ways to optimize and streamline processes.
-              </p>
-              <p className="font-bold">Skills</p>
-              {Object.entries(TechRegistery).map(([key, Icon], index) => (
-                <span key={index} className="mr-2 mb-2  rounded-full bg-transparent">
-                  <Tooltip>
-                    <TooltipTrigger><Icon /></TooltipTrigger>
-                    <TooltipContent>
-                      {key}
-                    </TooltipContent>
-                  </Tooltip>
-                </span>
-              ))}
-            </div>
+            <p>
+              I'm Software engineer with a wide range of experience in different domains. From low-level system programming to high-level web development.
+              Have gained a solid understanding of various programming paradigms, technologies and languages ranging from Python, TypeScript, C++, C to Lua
+            </p>
+            <p>
+              My experience spans web development, system programming, and automation scripts. Recently, I've been diving into infrastructure, exploring new ways to optimize and streamline processes.
+            </p>
+            <p className="font-bold">Skills</p>
+            {Object.entries(TechRegistery).map(([key, Icon], index) => (
+              <span key={index} className="mr-2 mb-2  rounded-full bg-transparent">
+                <Tooltip>
+                  <TooltipTrigger><Icon /></TooltipTrigger>
+                  <TooltipContent>
+                    {key}
+                  </TooltipContent>
+                </Tooltip>
+              </span>
+            ))}
+          </div>
         </section>
-        
-        <footer className="mt-32 mb-12 text-center text-sm text-muted">
-          © {new Date().getFullYear()} Sahazel. All rights reserved.
-        </footer>
       </main>
     </div>
   );

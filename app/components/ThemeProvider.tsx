@@ -16,11 +16,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true);
         const savedTheme = localStorage.getItem("theme") as Theme | null;
         if (savedTheme) {
             setTheme(savedTheme);
+            document.documentElement.setAttribute("data-theme", savedTheme);
+        } else {
+            // Default to dark theme
+            document.documentElement.setAttribute("data-theme", "dark");
         }
+        setMounted(true);
     }, []);
 
     useEffect(() => {
@@ -34,10 +38,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         setTheme((prev) => (prev === "dark" ? "light" : "dark"));
     };
 
-    if (!mounted) {
-        return null;
-    }
-
+    // Render children immediately but with initial theme applied via CSS
+    // This prevents content flash while still allowing hydration
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}
