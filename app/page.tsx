@@ -1,5 +1,5 @@
 import { Github, Twitter, AtSign } from "lucide-react";
-import { ProjectCard, TechRegistery } from "./components/ProjectCard";
+import { ProjectCard } from "./components/ProjectCard";
 import { HoverHighlight } from "./components/HoverHighlight";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,11 +7,11 @@ import img from "../public/pfp.jpg";
 import profilePicture from "../public/pfp-main.png";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
-import { projects } from "@/lib/projects";
+import { projects, TechRegistery } from "@/lib/projects";
 import { getAllPosts } from "@/lib/actions";
 
 export default function Home() {
-  const articles  = getAllPosts();
+  const articles = getAllPosts();
   return (
     <div className="min-h-screen w-full relative">
       {/* Theme toggle */}
@@ -23,7 +23,7 @@ export default function Home() {
           {/* Left content */}
           <div className="flex-1">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
-              Hi, I'm Sahazel.
+              Hi, I'm <span className="text-accent">Sahazel</span>.
             </h1>
 
             <div className="space-y-4 text-muted leading-relaxed">
@@ -76,6 +76,7 @@ export default function Home() {
               width={250}
               height={250}
               className="rounded-lg border border-purple-500/20"
+              loading="eager"
             />
           </div>
         </section>
@@ -90,9 +91,10 @@ export default function Home() {
               </h2></div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {projects.slice(0, 4).map((project, index) => (
+              {projects.slice(0, 4).map((project) => (
                 <ProjectCard
-                  key={index}
+                  key={project.slug}
+                  slug={project.slug}
                   title={project.title}
                   description={project.description}
                   technologies={project.technologies}

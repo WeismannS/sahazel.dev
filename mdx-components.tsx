@@ -8,7 +8,7 @@ const components: MDXComponents = {
         <h1 className="text-4xl font-bold mt-8 mb-4 text-foreground">{children}</h1>
     ),
     h2: ({ children }) => (
-        <h2 className="text-3xl font-semibold mt-8 mb-3 text-foreground border-b border-border pb-2">{children}</h2>
+        <h2 className="text-3xl font-semibold mt-8 mb-3 text-foreground border-b border-accent/50 pb-2">{children}</h2>
     ),
     h3: ({ children }) => (
         <h3 className="text-2xl font-semibold mt-6 mb-2 text-foreground">{children}</h3>
@@ -46,7 +46,7 @@ const components: MDXComponents = {
         <ol className="list-decimal list-inside mb-4 space-y-2 text-foreground/90 pl-4">{children}</ol>
     ),
     li: ({ children }) => (
-        <li className="leading-7">{children}</li>
+        <li className="leading-7 marker:text-accent">{children}</li>
     ),
 
     // Blockquote
@@ -94,7 +94,7 @@ const components: MDXComponents = {
         <tr className="hover:bg-secondary/50 transition-colors">{children}</tr>
     ),
     th: ({ children }) => (
-        <th className="px-4 py-3 text-left text-sm font-semibold text-foreground border-b border-border">
+        <th className="px-4 py-3 text-left text-sm font-semibold text-foreground border-b border-accent">
             {children}
         </th>
     ),
@@ -113,8 +113,7 @@ const components: MDXComponents = {
             return (
                 <input
                     {...props}
-                    disabled
-                    className="mr-2 h-4 w-4 rounded border-border accent-accent"
+                    className="mr-2 h-4 w-4 rounded border-border accent-"
                 />
             )
         }

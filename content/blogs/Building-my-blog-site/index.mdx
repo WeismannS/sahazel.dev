@@ -16,15 +16,23 @@ In this post, I'll walk you through the tech stack I chose, the decisions I made
 
 Here's what powers this blog:
 
-- **Next.js 15** - The React framework with App Router
+- **Next.js 16** - The React framework with App Router
 - **TypeScript** - Type safety is non-negotiable
 - **MDX** - Markdown with JSX components
 - **Tailwind CSS** - Utility-first styling
 - **Bun** - Fast JavaScript runtime and package manager
 
-### Why Next.js?
+### Why Next.js? Why not Astro or 11ty?
 
-Next.js was an easy choice. The App Router provides excellent file-based routing, and the ability to mix server and client components gives me the flexibility I need. Plus, static generation means my blog posts are blazing fast.
+People say it's overkill for a blog, and that's true. But it's overkill at no additional cost.
+
+Setting up SSG with Next.js is just as easy as anywhere else. If it required a lot more engineering for no additional benefit, I wouldn't use it. But it's cheap to set up, and you're future-proofed for scaling into Next.js features beyond SSG if the project ever goes there.
+
+The bundle size is maybe the biggest reason to go with something else — say, Astro. Next.js ships ~200-300KB of JavaScript (React runtime, hydration, client router) even for a static site. Astro ships a lot less — but let's be honest, there's a high chance you'll end up using React with Astro anyway for interactive bits (i know i would), plus their View Transitions client router (~50KB total). It's not as big as Next.js, but it's not zero either. Just food for thought.
+
+Next.js pays an upfront tax — the React runtime, hydration layer, and client router ship on every page regardless of how much interactivity you actually need. For a static blog, that's overhead. But the upside is you're never limited — adding interactivity later is trivial because the infrastructure is already there. And if you need a component or library from the React ecosystem, you already have it. For example, I used shadcn's tooltip component — was it worth the 200KB Next.js tax just for a tooltip? No. But that's assuming the tooltip is the only thing I'll ever add, and it won't be.
+
+**The practical reality:** the difference adds maybe 0.1 seconds on a 4G connection and then it would be cached. Nobody notices. Ship the thing.
 
 ```typescript
 // Generating static paths for all blog posts
@@ -149,7 +157,7 @@ For the blog content, I used Tailwind's typography plugin with some customizatio
 
 This is just the beginning. Here are some features I'm planning to add:
 
-- [ ] Code syntax highlighting with themes
+- [X] Code syntax highlighting with themes
 - [ ] Table of contents generation
 - [ ] Related posts suggestions
 - [ ] RSS feed

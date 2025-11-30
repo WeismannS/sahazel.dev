@@ -1,40 +1,22 @@
 import Image from "next/image";
-import { SVGProps } from "react";
-import { DrizzleORM, Nextjs, TypeScript, React, TailwindCSS, CPP, Python, Bun, PostgreSQL, FastAPI, AmazonWebServices, Docker, JavaScript, Lua } from "./SVG";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Github, ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { TechRegistery, Tech, ProjectStatus } from "@/lib/projects";
 
 interface ProjectCardProps {
+    slug: string;
     title: string;
     description: string;
     image?: string;
     technologies: Tech[];
-    status?: "operational" | "maintenance" | "offline" | "archived";
+    status?: ProjectStatus;
     detailsUrl?: string;
     githubUrl?: string;
 }
-type Tech = keyof typeof TechRegistery
-
-export const TechRegistery = {
-    "React": React,
-    "Next.js": Nextjs,
-    "TypeScript": TypeScript,
-    "Drizzle ORM": DrizzleORM,
-    "C++": CPP,
-    "Python": Python,
-    "Tailwind CSS": TailwindCSS,
-    "PostgreSQL": PostgreSQL,
-    "Bun": Bun,
-    "FastAPI": FastAPI,
-    "Amazon Web Services": AmazonWebServices,
-    "Docker": Docker,
-    "JavaScript": JavaScript,
-    "Lua": Lua,
-}
-
-
 
 export function ProjectCard({
+    slug,
     title,
     description,
     image,
@@ -136,14 +118,12 @@ export function ProjectCard({
                             {statusLabels[status]}
                         </span>
                     </div>
-                    <a
-                        href={githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <Link
+                        href={`/projects/${slug}`}
                         className="text-xs text-muted hover:text-foreground transition-colors"
                     >
-                        View on GitHub →
-                    </a>
+                        More Details →
+                    </Link>
                 </div>
             </div>
         </div>
