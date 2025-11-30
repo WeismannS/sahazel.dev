@@ -30,7 +30,7 @@ export default function BlogPage() {
                             href={article.url}
                             className="flex gap-6 border-b border-border/50 pb-6 last:border-0 group"
                         >
-                            <div className="relative w-32 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-purple-600/40 to-pink-500/40">
+                            <div className="relative w-32 h-24 shrink-0 rounded-lg overflow-hidden bg-linear-to-br from-purple-600/40 to-pink-500/40">
                                 {article.image ? (
                                     <img
                                         src={article.image}

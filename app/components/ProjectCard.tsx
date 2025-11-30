@@ -131,7 +131,7 @@ export function ProjectCard({
                 {/* Footer */}
                 <div className="flex items-center justify-between pt-3 border-t border-white/10">
                     <div className="flex items-center gap-2">
-                        <span className={`w-2 h-2 rounded-full animate-pulse animation- ${status === "operational" ? "bg-green-500" : status === "maintenance" ? "bg-yellow-500" : status === "archived" ? "bg-gray-500" : "bg-red-500"}`} />
+                        <span className={`w-2 h-2 rounded-full animate-pulse animation- ${status === "operational" ? "bg-green-500" : status === "maintenance" ? "bg-orange-500" : status === "archived" ? "bg-yellow-500" : "bg-red-500"}`} />
                         <span className={`text-xs ${statusColors[status]}`}>
                             {statusLabels[status]}
                         </span>

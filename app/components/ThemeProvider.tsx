@@ -37,9 +37,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const toggleTheme = () => {
         setTheme((prev) => (prev === "dark" ? "light" : "dark"));
     };
-
-    // Render children immediately but with initial theme applied via CSS
-    // This prevents content flash while still allowing hydration
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}

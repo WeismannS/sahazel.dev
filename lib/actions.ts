@@ -13,7 +13,7 @@ export function getAllPosts() {
         .map(dir => {
             const filePath = path.join(blogDir, dir, "index.mdx");
             const content = fs.readFileSync(filePath, 'utf8');
-            const { data } = matter(content); // extracts frontmatter
+            const { data } = matter(content);
 
             // Handle image path - strip leading slash if present
             const imageName = data.image?.replace(/^\//, '');
@@ -41,6 +41,6 @@ export function getPostBySlug(slug: string) {
         title: data.title,
         date: formatDate(new Date(data.date)),
         image: imageName ? `/blog-assets/${slug}/${imageName}` : null,
-        html: mdxContent,
+        reading_time: content.split(' ').length < 200 ? 1 : Math.ceil(content.split(' ').length / 200),
     };
 }

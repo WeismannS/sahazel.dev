@@ -1,0 +1,169 @@
+--- 
+title : "Building my blog site with TypeScript"
+date : "2025-11-29"
+description : "How I built my personal blog site using TypeScript"
+tags : ["TypeScript", "Web Development", "Programming", "Tutorial"]
+image : "/cover_image.jpg"
+---
+
+## Introduction
+
+After years of writing code and building projects, I finally decided to build my own blog site. Not just any blog — a minimal, fast, and developer-friendly platform where I could share my thoughts and document my journey.
+
+In this post, I'll walk you through the tech stack I chose, the decisions I made along the way, and some lessons learned.
+
+## The Tech Stack
+
+Here's what powers this blog:
+
+- **Next.js 15** - The React framework with App Router
+- **TypeScript** - Type safety is non-negotiable
+- **MDX** - Markdown with JSX components
+- **Tailwind CSS** - Utility-first styling
+- **Bun** - Fast JavaScript runtime and package manager
+
+### Why Next.js?
+
+Next.js was an easy choice. The App Router provides excellent file-based routing, and the ability to mix server and client components gives me the flexibility I need. Plus, static generation means my blog posts are blazing fast.
+
+```typescript
+// Generating static paths for all blog posts
+export async function generateStaticParams() {
+    const posts = getAllPosts()
+    return posts.map((post) => ({
+        slug: post.slug,
+    }))
+}
+```
+
+### Why MDX?
+
+MDX lets me write content in Markdown while embedding React components when needed. This is perfect for technical blog posts where I might want to include interactive examples or custom styling.
+
+```mdx
+## This is markdown
+
+But I can also use <CustomComponent prop="value" /> inline!
+```
+
+## Project Structure
+
+I organized my blog with a clean folder structure:
+
+```md
+content/
+  blogs/
+    Building-my-blog-site/
+      index.mdx
+      cover_image.jpg
+lib/
+  actions.ts    # Blog post utilities
+  utils.ts      # Helper functions
+app/
+  blog/
+    page.tsx        # Blog listing
+    [slug]/
+      page.tsx      # Individual post
+```
+
+Each blog post lives in its own folder under `content/blogs/`. This keeps assets organized and makes it easy to manage related files.
+
+## Parsing Blog Posts
+
+The magic happens in `lib/actions.ts`. Using `gray-matter`, I parse the MDX frontmatter to extract metadata:
+
+```typescript
+import matter from "gray-matter";
+import fs from "fs";
+
+export function getAllPosts() {
+    const blogDir = path.join(process.cwd(), "content", "blogs");
+    const dirs = fs.readdirSync(blogDir, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name);
+
+    return dirs.map(dir => {
+        const filePath = path.join(blogDir, dir, "index.mdx");
+        const content = fs.readFileSync(filePath, 'utf8');
+        const { data } = matter(content);
+        
+        return {
+            slug: dir,
+            title: data.title,
+            date: formatDate(new Date(data.date)),
+            // ... more fields
+        };
+    });
+}
+```
+
+## Challenges I Faced
+
+### 1. MDX Configuration
+
+Getting MDX to work with Next.js 15 required some configuration tweaking. The `@next/mdx` package needed specific settings in `next.config.mjs`:
+
+```javascript
+import createMDX from '@next/mdx'
+
+const withMDX = createMDX({
+    extension: /\.mdx?$/,
+    options: {
+        remarkPlugins: [remarkGfm],
+        rehypePlugins: [],
+    },
+})
+
+export default withMDX(nextConfig)
+```
+
+### 2. Dynamic Imports
+
+Loading MDX content dynamically required using async imports:
+
+```typescript
+const { default: Post } = await import(`@/content/blogs/${slug}/index.mdx`)
+```
+
+### 3. Reading Time Calculation
+
+I added a simple reading time estimation based on word count:
+
+```typescript
+reading_time: content.split(' ').length < 200 
+    ? 1 
+    : Math.ceil(content.split(' ').length / 200)
+```
+
+## Styling with Tailwind
+
+For the blog content, I used Tailwind's typography plugin with some customizations. The `prose` class handles most of the styling automatically:
+
+```tsx
+<div className="gh-content prose prose-invert max-w-none">
+    <Post />
+</div>
+```
+
+## What's Next?
+
+This is just the beginning. Here are some features I'm planning to add:
+
+- [ ] Code syntax highlighting with themes
+- [ ] Table of contents generation
+- [ ] Related posts suggestions
+- [ ] RSS feed
+- [ ] Search functionality
+- [ ] Comments with Giscus
+
+## Conclusion
+
+Building your own blog is a rewarding experience. You have complete control over the design, functionality, and content. While platforms like Medium or Dev.to are great, there's something special about owning your corner of the internet.
+
+If you're a developer thinking about starting a blog, I'd encourage you to build your own. The skills you'll pick up along the way are invaluable, and you'll end up with something uniquely yours.
+
+Feel free to check out the source code on [GitHub](https://github.com/WeismannS) or reach out on [Twitter](https://X.com/SahazelXI) if you have any questions!
+
+---
+
+*Thanks for reading! If you found this helpful, consider sharing it with others who might be interested.*
