@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { ThemeToggle } from "./components/ThemeToggle";
 import Head from "next/head";
+import Script from "next/script";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -38,6 +39,12 @@ export default function RootLayout({
         <footer className="mt-32 mb-12 text-center text-sm text-muted">
           © {new Date().getFullYear()} Sahazel. All rights reserved.
         </footer>
+           <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="5dc57cc4-8782-4261-a9d7-4eb55f7fc0e5"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
