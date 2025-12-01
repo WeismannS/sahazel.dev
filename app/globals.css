@@ -475,17 +475,10 @@ figcaption strong {
   animation: scale 1s;
   animation-fill-mode: both;
 }
-
-::view-transition-old(root),
-.dark::view-transition-old(root) {
+::view-transition-old(root){
   animation: none;
   animation-fill-mode: both;
   z-index: -1;
-}
-
-.dark::view-transition-new(root) {
-  animation: scale 1s;
-  animation-fill-mode: both;
 }
 
 @keyframes scale {
