@@ -32,6 +32,7 @@ export default function ProjectsPage() {
                             technologies={project.technologies}
                             status={project.status}
                             githubUrl={project.githubUrl}
+                            image={project.image}
                         />
                     ))}
                 </div>
