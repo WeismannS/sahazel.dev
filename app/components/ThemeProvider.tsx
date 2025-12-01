@@ -35,7 +35,22 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }, [theme, mounted]);
 
     const toggleTheme = () => {
-        setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+        const newTheme = theme === "dark" ? "light" : "dark";
+
+        // Use View Transitions API if available
+        if (document.startViewTransition) {
+            document.startViewTransition(() => {
+                document.documentElement.setAttribute("data-theme", newTheme);
+                if (newTheme === "dark") {
+                    document.documentElement.classList.add("dark");
+                } else {
+                    document.documentElement.classList.remove("dark");
+                }
+                setTheme(newTheme);
+            });
+        } else {
+            setTheme(newTheme);
+        }
     };
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
