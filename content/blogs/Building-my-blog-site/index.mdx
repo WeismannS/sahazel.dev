@@ -3,14 +3,14 @@ title : "Building my blog site with TypeScript"
 date : "2025-11-29"
 description : "How I built my personal blog site using TypeScript"
 tags : ["TypeScript", "Web Development", "Programming", "Tutorial"]
-image : "/cover_image.jpg"
+image : "/cover_image.webp"
 ---
 
 ## Introduction
 
-After years of writing code and building projects, I finally decided to build my own blog site. Not just any blog — a minimal, fast, and developer-friendly platform where I could share my thoughts and document my journey.
-
-In this post, I'll walk you through the tech stack I chose, the decisions I made along the way, and some lessons learned.
+First blog post in my freshly deployed personal blog site!
+I've always wanted a personal blog to share my thoughts and projects.
+So I built one. Took a weekend and some questionable decisions I'll explain below.
 
 ## The Tech Stack
 
@@ -21,18 +21,17 @@ Here's what powers this blog:
 - **MDX** - Markdown with JSX components
 - **Tailwind CSS** - Utility-first styling
 - **Bun** - Fast JavaScript runtime and package manager
+- **Umami** - Privacy-focused analytics
 
 ### Why Next.js? Why not Astro or 11ty?
 
 People say it's overkill for a blog, and that's true. But it's overkill at no additional cost.
 
-Setting up SSG with Next.js is just as easy as anywhere else. If it required a lot more engineering for no additional benefit, I wouldn't use it. But it's cheap to set up, and you're future-proofed for scaling into Next.js features beyond SSG if the project ever goes there.
+Implementing SSG in Next.js is straightforward and comparable to other frameworks. If it demanded significantly more effort without tangible advantages, I wouldn’t bother. It’s low-cost to configure, and it positions the project to easily adopt additional Next.js features in the future if needed.
 
-The bundle size is maybe the biggest reason to go with something else — say, Astro. Next.js ships ~200-300KB of JavaScript (React runtime, hydration, client router) even for a static site. Astro ships a lot less — but let's be honest, there's a high chance you'll end up using React with Astro anyway for interactive bits (i know i would), plus their View Transitions client router (~50KB total). It's not as big as Next.js, but it's not zero either. Just food for thought.
+The bundle size is maybe the biggest reason to go with something else...say, Astro. Next.js ships with around 200KB of JavaScript (React runtime, hydration, client router) even for a static site. on the other hand Astro ships with a lot less but let's be honest, there's a high chance you'll end up using React with Astro anyway for interactivity (i know i would), plus their View Transitions client router (~50KB total). It's not as big as Next.js, but it's not zero either..., just food for thought.
 
-Next.js pays an upfront tax — the React runtime, hydration layer, and client router ship on every page regardless of how much interactivity you actually need. For a static blog, that's overhead. But the upside is you're never limited — adding interactivity later is trivial because the infrastructure is already there. And if you need a component or library from the React ecosystem, you already have it. For example, I used shadcn's tooltip component — was it worth the 200KB Next.js tax just for a tooltip? No. But that's assuming the tooltip is the only thing I'll ever add, and it won't be.
-
-**The practical reality:** the difference adds maybe 0.1 seconds on a 4G connection and then it would be cached. Nobody notices. Ship the thing.
+Going with NextJS pays an upfront tax; the React runtime, hydration layer, and client router ship on every page regardless of how much interactivity you actually need. For a static blog, that's overhead. But the upside is you're never limited, adding interactivity later is trivial because the infrastructure is already there. And if you need a component or library from the React ecosystem, you already have it. For example, I used shadcn's tooltip component - was it worth the 200KB Next.js tax just for a tooltip? No. But that's assuming the tooltip is the only thing I'll ever add, and it won't be.
 
 ```typescript
 // Generating static paths for all blog posts
@@ -47,12 +46,16 @@ export async function generateStaticParams() {
 ### Why MDX?
 
 MDX lets me write content in Markdown while embedding React components when needed. This is perfect for technical blog posts where I might want to include interactive examples or custom styling.
-
 ```mdx
 ## This is markdown
 
 But I can also use <CustomComponent prop="value" /> inline!
 ```
+One thing i found cool about next/mdx is that i can just do :
+```typescript
+const { default: Post } = await import(`@/content/blogs/${slug}/index.mdx`)
+```
+to dynamically import the MDX file as a React component. No extra loaders or plugins needed.
 
 ## Project Structure
 
@@ -60,18 +63,21 @@ I organized my blog with a clean folder structure:
 
 ```md
 content/
-  blogs/
-    Building-my-blog-site/
-      index.mdx
-      cover_image.jpg
+    blogs/ # Where all the actual blog posts live
+        Building-my-blog-site/
+            index.mdx
+public/
+    blog-assets/ # Static assets for blog posts
+        Building-my-blog-site/
+            cover_image.jpg
 lib/
-  actions.ts    # Blog post utilities
-  utils.ts      # Helper functions
+    actions.ts    # Blog post utilities
+    utils.ts      # Helper functions
 app/
-  blog/
+    blog/
     page.tsx        # Blog listing
     [slug]/
-      page.tsx      # Individual post
+        page.tsx      # Individual post
 ```
 
 Each blog post lives in its own folder under `content/blogs/`. This keeps assets organized and makes it easy to manage related files.
@@ -104,71 +110,68 @@ export function getAllPosts() {
     });
 }
 ```
-
+and using this metadata, I generate static paths and render post listings using Next.js's SSG capabilities (see above).
 ## Challenges I Faced
 
 ### 1. MDX Configuration
 
-Getting MDX to work with Next.js 15 required some configuration tweaking. The `@next/mdx` package needed specific settings in `next.config.mjs`:
-
-```javascript
+Now...this is kind of my fault since somehow i missed the exact paragraph in the Next.js docs that describes my current issues but it's also vercel's.
+I initially struggled to get any kind of remark or rehype plugins working with `next/mdx`. 
+the docs clearly says the way to have a next.config.ts file like : 
+```typescript
+import remarkGfm from 'remark-gfm'
 import createMDX from '@next/mdx'
-
+ 
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Allow .mdx extensions for files
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  // Optionally, add any other Next.js config below
+}
+ 
 const withMDX = createMDX({
-    extension: /\.mdx?$/,
-    options: {
-        remarkPlugins: [remarkGfm],
-        rehypePlugins: [],
-    },
+  // Add markdown plugins here, as desired
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [],
+  },
 })
-
+ 
+// Combine MDX and Next.js config
 export default withMDX(nextConfig)
 ```
-
-### 2. Dynamic Imports
-
-Loading MDX content dynamically required using async imports:
-
+Now this would have worked perfectly fine...if the default bundler wasn't turbopack which the former code is not compatible with.
+it's astonishing that the first paragraph in the next mdx docs doesn't work for the *default* next.js setup.
+now the solution was right there in the docs *after* the above paragraph but still...i had to waste like 1 hour of my life trying to figure this out.
+the solution was a different way to configure plugins that works with turbopack :
 ```typescript
-const { default: Post } = await import(`@/content/blogs/${slug}/index.mdx`)
+import createMDX from '@next/mdx'
+const withMDX = createMDX({
+  options: {
+
+    mdxExtensions: ['mdx', 'md'],
+
+    remarkPlugins: [['remark-frontmatter', { strict: true, throwOnError: true, type: 'yaml', fence: '---' }], ['remark-gfm', { strict: true, throwOnError: true }]],
+    rehypePlugins: [['rehype-pretty-code', {
+      keepBackground: false,
+    }]],
+  }
+})
 ```
-
-### 3. Reading Time Calculation
-
-I added a simple reading time estimation based on word count:
-
-```typescript
-reading_time: content.split(' ').length < 200 
-    ? 1 
-    : Math.ceil(content.split(' ').length / 200)
-```
-
-## Styling with Tailwind
-
-For the blog content, I used Tailwind's typography plugin with some customizations. The `prose` class handles most of the styling automatically:
-
-```tsx
-<div className="gh-content prose prose-invert max-w-none">
-    <Post />
-</div>
-```
+you see the difference? the plugins are arrays with options instead of just the plugin itself. 
 
 ## What's Next?
 
 This is just the beginning. Here are some features I'm planning to add:
 
 - [X] Code syntax highlighting with themes
-- [ ] Table of contents generation
 - [ ] Related posts suggestions
 - [ ] RSS feed
-- [ ] Search functionality
 - [ ] Comments with Giscus
 
 ## Conclusion
 
 Building your own blog is a rewarding experience. You have complete control over the design, functionality, and content. While platforms like Medium or Dev.to are great, there's something special about owning your corner of the internet.
-
-If you're a developer thinking about starting a blog, I'd encourage you to build your own. The skills you'll pick up along the way are invaluable, and you'll end up with something uniquely yours.
 
 Feel free to check out the source code on [GitHub](https://github.com/WeismannS) or reach out on [Twitter](https://X.com/SahazelXI) if you have any questions!
 

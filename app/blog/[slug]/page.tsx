@@ -18,13 +18,22 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     const { default: Post } = await import(`@/content/blogs/${slug}/index.mdx`)
     return (
         <article className="max-w-3xl mx-auto py-16 px-4">
-            <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-muted hover:text-foreground transition-colors mb-8"
-            >
-                <ArrowLeft className="w-4 h-4 text-accent" />
-                Back to Home
-            </Link>
+            <div className="mb-4 flex flex-col gap-1">
+                <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 text-muted hover:text-foreground transition-colors"
+                >
+                    <ArrowLeft className="w-4 h-4 text-accent" />
+                    Back to Home
+                </Link>
+                <Link
+                    href="/blog"
+                    className="inline-flex items-center gap-2 text-muted hover:text-foreground transition-colors ml-6 text-sm"
+                >
+                    <ArrowLeft className="w-3 h-3 text-accent" />
+                    Back to Blogs
+                </Link>
+            </div>
             <header className="mb-12">
                 <Image
                     src={postMetaData.image || '/default-feature-image.jpg'}

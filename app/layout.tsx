@@ -22,7 +22,23 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Weismann - Portfolio",
   description: "Personal portfolio and blog",
+  icons: {
+    icon: {
+      url: "/favicon.webp",
+      type: "image/webp"
+    }
+  }
 };
+
+export const viewport = {
+    themeColor : "#a78bfa",
+}
+const themeInitScript = `
+  (function() {
+    const theme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+`;
 
 export default function RootLayout({
   children,
@@ -32,6 +48,9 @@ export default function RootLayout({
   return (
 
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
