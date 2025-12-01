@@ -3,8 +3,8 @@ import { ProjectCard } from "./components/ProjectCard";
 import { HoverHighlight } from "./components/HoverHighlight";
 import Image from "next/image";
 import Link from "next/link";
-import img from "../public/pfp.jpg";
-import profilePicture from "../public/pfp-main.png";
+import img from "../public/pfp.webp";
+import profilePicture from "../public/pfp-main.webp";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import { projects, TechRegistery } from "@/lib/projects";
@@ -23,7 +23,7 @@ export default function Home() {
           {/* Left content */}
           <div className="flex-1">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
-              Hi, I'm <span className="text-accent">Sahazel</span>.
+              Hi, I'm <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-chart-4">Sahazel</span>.
             </h1>
 
             <div className="space-y-4 text-muted leading-relaxed">
@@ -100,6 +100,8 @@ export default function Home() {
                   technologies={project.technologies}
                   status={project.status}
                   githubUrl={project.githubUrl}
+                  image={project.image
+                  }
                 />
               ))}
             </div>

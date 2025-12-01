@@ -62,11 +62,11 @@ export default function RootLayout({
         <footer className="mt-32 mb-12 text-center text-sm text-muted">
           © {new Date().getFullYear()} Sahazel. All rights reserved.
         </footer>
-        <Script
+        {process.env.NODE_ENV === "production" && <Script
           src="https://cloud.umami.is/script.js"
           data-website-id="5dc57cc4-8782-4261-a9d7-4eb55f7fc0e5"
           strategy="lazyOnload"
-        />
+        />}
       </body>
     </html>
   );

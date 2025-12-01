@@ -32,27 +32,10 @@ export type Project = {
     liveUrl?: string;
     features?: string[];
     year?: string;
+    image?: string;
 };
 
 export const projects: Project[] = [
-    {
-        slug: "character-ai-ts",
-        title: "Character.AI-TS",
-        description:
-            "Unofficial TypeScript wrapper for character.ai - A fully typed API client for interacting with Character.AI's platform",
-        longDescription:
-            "A comprehensive TypeScript wrapper for the Character.AI platform, providing developers with a fully typed API client. This library simplifies interaction with Character.AI's services, offering type safety and excellent developer experience with autocomplete support.",
-        technologies: ["TypeScript"],
-        status: "archived",
-        githubUrl: "https://github.com/WeismannS/Character.AI-TS",
-        features: [
-            "Fully typed API responses",
-            "Promise-based async/await support",
-            "Comprehensive error handling",
-            "Easy authentication flow",
-        ],
-        year: "2023",
-    },
     {
         slug: "proto-agent",
         title: "Proto-agent",
@@ -70,7 +53,7 @@ export const projects: Project[] = [
             "Gemini API support",
             "Extensible plugin system",
         ],
-        year: "2024",
+        year: "2025",
     },
     {
         slug: "miku",
@@ -87,9 +70,10 @@ export const projects: Project[] = [
             "Concurrent rendering support",
             "Virtual DOM implementation",
             "Hooks API (useState, useEffect)",
-            "JSX support",
+            "TSX support",
         ],
         year: "2024",
+        image : "miku.webp"
     },
     {
         slug: "komikku",
@@ -146,6 +130,24 @@ export const projects: Project[] = [
             "High-quality image output",
             "Easy npm integration",
             "CLI and programmatic API",
+        ],
+        year: "2023",
+    },
+    {
+        slug: "character-ai-ts",
+        title: "Character.AI-TS",
+        description:
+            "Unofficial TypeScript wrapper for character.ai - A fully typed API client for interacting with Character.AI's platform",
+        longDescription:
+            "A comprehensive TypeScript wrapper for the Character.AI platform, providing developers with a fully typed API client. This library simplifies interaction with Character.AI's services, offering type safety and excellent developer experience with autocomplete support.",
+        technologies: ["TypeScript"],
+        status: "archived",
+        githubUrl: "https://github.com/WeismannS/Character.AI-TS",
+        features: [
+            "Fully typed API responses",
+            "Promise-based async/await support",
+            "Comprehensive error handling",
+            "Easy authentication flow",
         ],
         year: "2023",
     },

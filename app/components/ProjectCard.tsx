@@ -45,7 +45,7 @@ export function ProjectCard({
             <div className="relative h-48 bg-linear-to-br from-purple-600/40 to-pink-500/40 overflow-hidden">
                 {image ? (
                     <Image
-                        src={image}
+                        src={`/${image}`}
                         alt={title}
                         fill
                         className="object-cover"
