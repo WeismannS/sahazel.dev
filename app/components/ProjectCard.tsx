@@ -40,7 +40,7 @@ export function ProjectCard({
     };
 
     return (
-        <div className="rounded-xl overflow-hidden bg-background border border-dark-border/10 max-w-sm">
+        <div className="rounded-xl overflow-hidden bg-background border border-border max-w-sm">
             {/* Image/Preview Section */}
             <div className="relative h-48 bg-linear-to-br from-purple-600/40 to-pink-500/40 overflow-hidden">
                 {image ? (
@@ -52,15 +52,6 @@ export function ProjectCard({
                     />
                 ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
-                        {/* <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
-                            <svg
-                                className="w-8 h-8 text-white/60"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                            >
-                                <path d="M8 5v14l11-7z" />
-                            </svg>
-                        </div> */}
                     </div>
                 )}
             </div>

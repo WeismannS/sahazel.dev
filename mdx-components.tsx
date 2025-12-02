@@ -4,23 +4,23 @@ import Link from 'next/link'
 
 const components: MDXComponents = {
     // Headings
-    h1: ({ children }) => (
-        <h1 className="text-4xl font-bold mt-8 mb-4 text-foreground">{children}</h1>
+    h1: ({ children, ...props }) => (
+        <h1 className="text-4xl font-bold mt-8 mb-4 text-foreground" {...props}>{children}</h1>
     ),
-    h2: ({ children }) => (
-        <h2 className="text-3xl font-semibold mt-8 mb-3 text-foreground border-b border-accent/50 pb-2">{children}</h2>
+    h2: ({ children, ...props }) => (
+        <h2 className="text-3xl font-semibold mt-8 mb-3 text-foreground border-b border-accent/50 pb-2" {...props}>{children}</h2>
     ),
-    h3: ({ children }) => (
-        <h3 className="text-2xl font-semibold mt-6 mb-2 text-foreground">{children}</h3>
+    h3: ({ children, ...props }) => (
+        <h3 className="text-2xl font-semibold mt-6 mb-2 text-foreground" {...props}>{children}</h3>
     ),
-    h4: ({ children }) => (
-        <h4 className="text-xl font-medium mt-4 mb-2 text-foreground">{children}</h4>
+    h4: ({ children, ...props }) => (
+        <h4 className="text-xl font-medium mt-4 mb-2 text-foreground" {...props}>{children}</h4>
     ),
-    h5: ({ children }) => (
-        <h5 className="text-lg font-medium mt-4 mb-2 text-foreground">{children}</h5>
+    h5: ({ children, ...props }) => (
+        <h5 className="text-lg font-medium mt-4 mb-2 text-foreground" {...props}>{children}</h5>
     ),
-    h6: ({ children }) => (
-        <h6 className="text-base font-medium mt-4 mb-2 text-muted-foreground">{children}</h6>
+    h6: ({ children, ...props }) => (
+        <h6 className="text-base font-medium mt-4 mb-2 text-muted-foreground" {...props}>{children}</h6>
     ),
 
     // Paragraph

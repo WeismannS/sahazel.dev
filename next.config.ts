@@ -4,10 +4,14 @@ const withMDX = createMDX({
 
     mdxExtensions: ['mdx', 'md'],
 
-    remarkPlugins: [['remark-frontmatter', { strict: true, throwOnError: true, type: 'yaml', fence: '---' }], ['remark-gfm', { strict: true, throwOnError: true }]],
-    rehypePlugins: [['rehype-pretty-code', {
-      keepBackground: false,
-    }]],
+    remarkPlugins: [
+      ['remark-frontmatter', { strict: true, throwOnError: true, type: 'yaml', fence: '---' }],
+      ['remark-gfm', { strict: true, throwOnError: true }]
+    ],
+    rehypePlugins: [
+      ["rehype-slug", {}],
+      ['rehype-pretty-code', { keepBackground: false }]
+    ],
   }
 })
 
