@@ -1,8 +1,9 @@
+
 import { getAllPosts, getPostBySlug } from "@/lib/actions";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-
+import GiscusComments from "./GiscusComments";
 export async function generateStaticParams() {
     const posts = getAllPosts()
 
@@ -48,6 +49,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <div className="gh-content prose prose-invert max-w-none">
                 <Post />
             </div>
+            <GiscusComments />
         </article>
     );
 }
