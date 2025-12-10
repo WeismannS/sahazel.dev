@@ -9,6 +9,7 @@ import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import { projects, TechRegistery } from "@/lib/projects";
 import { getAllPosts } from "@/lib/actions";
+import { formatDate } from "@/lib/utils";
 
 export default function Home() {
   const articles = getAllPosts();
@@ -128,7 +129,8 @@ export default function Home() {
                   </a>
                   </HoverHighlight>
                   <span className="text-sm text-muted mt-1">
-                    {article.date}
+                    
+                    {formatDate(article.date)}
                   </span>
                 </div>
               ))}

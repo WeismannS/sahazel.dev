@@ -21,7 +21,7 @@ export function getAllPosts() {
             return {
                 slug: dir,
                 title: data.title,
-                date: formatDate(new Date(data.date)),
+                date: new Date(data.date),
                 image: imageName ? `/blog-assets/${dir}/${imageName}` : null,
                 url: `/blog/${dir}`,
             };
@@ -39,7 +39,7 @@ export function getPostBySlug(slug: string) {
     return {
         slug,
         title: data.title,
-        date: formatDate(new Date(data.date)),
+        date: new Date(data.date),
         image: imageName ? `/blog-assets/${slug}/${imageName}` : null,
         reading_time: content.split(' ').length < 200 ? 1 : Math.ceil(content.split(' ').length / 200),
     };

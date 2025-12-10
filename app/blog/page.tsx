@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { HoverHighlight } from "../components/HoverHighlight";
+import { FormattedDate } from "../components/FormattedDate";
 import { getAllPosts } from "@/lib/actions";
 
 
@@ -49,9 +50,7 @@ export default function BlogPage() {
                                         {article.title}
                                     </span>
                                 </HoverHighlight>
-                                <span className="text-sm text-muted mt-2">
-                                    {article.date}
-                                </span>
+                                <FormattedDate date={article.date} />
                             </div>
                         </a>
                     ))}
