@@ -1,4 +1,4 @@
-import { DrizzleORM, Nextjs, TypeScript, React, TailwindCSS, CPP, Python, Bun, PostgreSQL, FastAPI, AmazonWebServices, Docker, JavaScript, Lua } from "@/app/components/SVG";
+import { DrizzleORM, Nextjs, TypeScript, React, TailwindCSS, CPP, Python, Bun, PostgreSQL, FastAPI, AmazonWebServices, Docker, JavaScript, Lua, ApacheKafka } from "@/app/components/SVG";
 
 export const TechRegistery = {
     "React": React,
@@ -15,6 +15,7 @@ export const TechRegistery = {
     "Docker": Docker,
     "JavaScript": JavaScript,
     "Lua": Lua,
+    "Kafka": ApacheKafka,
 };
 
 export type Tech = keyof typeof TechRegistery;
@@ -36,6 +37,25 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+    {
+        slug: "cascade",
+        title: "Cascade",
+        description:
+            "A CDC pipeline that streams Postgres WAL changes to Kafka and routes them to read replicas as executable SQL",
+        longDescription:
+            "Cascade is a Change Data Capture (CDC) system that leverages Postgres Logical Replication to stream database changes. It deserializes Write-Ahead Log (WAL) records into valid SQL statements and distributes them via Kafka, enabling decoupled sharding and read-replica architectures with high availability and OpenTelemetry observability.",
+        technologies: ["TypeScript", "Bun", "PostgreSQL", "Kafka", "Docker"],
+        status: "operational",
+        githubUrl: "https://github.com/WeismannS/Cascade",
+        features: [
+            "Log-based Change Data Capture (CDC)",
+            "Automatic WAL to SQL serialization",
+            "Decoupled Kafka-based architecture",
+            "Distributed tracing with OpenTelemetry",
+        ],
+        year: "2025",
+        image: "blog-assets/Sharding-using-postgres-logical-replication/cover_image.webp",
+    },
     {
         slug: "proto-agent",
         title: "Proto-agent",
@@ -150,7 +170,7 @@ export const projects: Project[] = [
             "Easy authentication flow",
         ],
         year: "2023",
-    },
+    },  
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
