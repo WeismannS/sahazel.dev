@@ -36,7 +36,9 @@ export default function BlogPage() {
                                     <img
                                         src={article.image}
                                         alt={article.title}
-                                        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                                        width={128}
+                                        height={128}
+                                        className="object-fit  w-full h-full group-hover:scale-105 transition-transform duration-300"
                                     />
                                 ) : (
                                     <div className="absolute inset-0 flex items-center justify-center">

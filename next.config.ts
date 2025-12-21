@@ -6,11 +6,12 @@ const withMDX = createMDX({
 
     remarkPlugins: [
       ['remark-frontmatter', { strict: true, throwOnError: true, type: 'yaml', fence: '---' }],
-      ['remark-gfm', { strict: true, throwOnError: true }]
+      ['remark-gfm', { strict: true, throwOnError: true }],
     ],
     rehypePlugins: [
       ["rehype-slug", {}],
-      ['rehype-pretty-code', { keepBackground: false }]
+      ['rehype-pretty-code', { keepBackground: false }],
+      ['rehype-unwrap-images', {}]
     ],
   }
 })

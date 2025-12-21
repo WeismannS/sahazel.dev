@@ -51,7 +51,7 @@ const components: MDXComponents = {
 
     // Blockquote
     blockquote: ({ children }) => (
-        <blockquote className="border-l-4 border-accent pl-4 py-2 my-4 italic text-muted-foreground bg-secondary/30 rounded-r">
+        <blockquote className="border-l-4 border-accent pl-4 py-2 my-4 italic text-muted-foreground bg-secondary/30 rounded-r before-content-none">
             {children}
         </blockquote>
     ),
@@ -68,12 +68,20 @@ const components: MDXComponents = {
 
     // Images
     img: (props) => (
-        <Image
-            sizes="100vw"
-            style={{ width: '100%', height: 'auto' }}
-            className="rounded-lg my-4"
-            {...(props as ImageProps)}
-        />
+        <figure className="my-4">
+            <Image
+                sizes="100vw"
+                width={800}
+                height={800}
+                {...(props as ImageProps)}
+                className="rounded-lg"
+            />
+            {props.alt && (
+                <figcaption className="text-center text-sm text-muted-foreground mt-2">
+                    {props.alt}
+                </figcaption>
+            )}
+        </figure>
     ),
 
     // Tables (GFM)
