@@ -10,6 +10,7 @@ import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import { projects, TechRegistery } from "@/lib/projects";
 import { getAllPosts } from "@/lib/actions";
 import { formatDate } from "@/lib/utils";
+import { FormattedDate } from "./components/FormattedDate";
 
 export default function Home() {
   const articles = getAllPosts();
@@ -29,8 +30,9 @@ export default function Home() {
 
             <div className="space-y-4 text-muted leading-relaxed">
               <p>
-                Avid functional programmer but also a clean interface advocater, i love making libraries that helps developers,
-                developing internal tools is my hobby.
+                A functional programmer at heart and a strong advocate for clean, intentional interfaces. 
+                I enjoy designing APIs and building libraries,
+                with a particular passion for internal tools that scale well and stay pleasant to use.
               </p>
               <p>
                 I've dabbled in Web Dev, System programming, automation scripts and been recently interested in infrastructure.
@@ -130,7 +132,7 @@ export default function Home() {
                   </HoverHighlight>
                   <span className="text-sm text-muted mt-1">
                     
-                    {formatDate(article.date)}
+                    <FormattedDate date={article.date}></FormattedDate>
                   </span>
                 </div>
               ))}

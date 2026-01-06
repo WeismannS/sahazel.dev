@@ -1,21 +1,21 @@
 import { DrizzleORM, Nextjs, TypeScript, React, TailwindCSS, CPP, Python, Bun, PostgreSQL, FastAPI, AmazonWebServices, Docker, JavaScript, Lua, ApacheKafka } from "@/app/components/SVG";
 
 export const TechRegistery = {
+    "TypeScript": TypeScript,
+    "JavaScript": JavaScript,
+    "Python": Python,
+    "C++": CPP,
+    "Lua": Lua,
     "React": React,
     "Next.js": Nextjs,
-    "TypeScript": TypeScript,
-    "Drizzle ORM": DrizzleORM,
-    "C++": CPP,
-    "Python": Python,
     "Tailwind CSS": TailwindCSS,
-    "PostgreSQL": PostgreSQL,
+    "Drizzle ORM": DrizzleORM,
     "Bun": Bun,
-    "FastAPI": FastAPI,
+    "PostgreSQL": PostgreSQL,
     "Amazon Web Services": AmazonWebServices,
     "Docker": Docker,
-    "JavaScript": JavaScript,
-    "Lua": Lua,
     "Kafka": ApacheKafka,
+    "FastAPI": FastAPI,
 };
 
 export type Tech = keyof typeof TechRegistery;
@@ -93,7 +93,7 @@ export const projects: Project[] = [
             "TSX support",
         ],
         year: "2024",
-        image : "miku.webp"
+        image: "miku.webp"
     },
     {
         slug: "komikku",
@@ -170,7 +170,7 @@ export const projects: Project[] = [
             "Easy authentication flow",
         ],
         year: "2023",
-    },  
+    },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
